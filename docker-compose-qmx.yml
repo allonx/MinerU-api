@@ -1,0 +1,25 @@
+services:
+  magic-pdf:
+    image: mineru/magic-pdf:v0.9.2
+    container_name: magic-pdf
+    ulimits:
+      stack: 67108864
+      memlock: -1
+    volumes:
+      - ./output:/root/output
+      - ./magic-pdf.json:/root/magic-pdf.json
+    ports:
+      - "8888:8888"
+    ipc: host
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              device_ids: ['0']
+              capabilities: [gpu]
+
+    restart: unless-stopped
+    #command: ["python3", "app.py"]
+
+ 
